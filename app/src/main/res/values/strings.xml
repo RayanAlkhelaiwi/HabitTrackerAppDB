@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Habit Tracker App DB</string>
+    <string name="habit_entry_text_view">Habit:</string>
+    <string name="habit_hint">e.g. Reading the book</string>
+    <string name="action_entry_text_view">Action:</string>
+    <string name="action_hint">1 for \"Done\" and 0 for \"Not Done\"</string>
+    <string name="btn_insertion">insert</string>
+    <string name="btn_dummy_insertion">insert Dummy habit</string>
+    <string name="btn_enter_insertion">Insert a habit</string>
+</resources>
