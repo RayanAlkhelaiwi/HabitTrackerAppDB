@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                insertDummyData();
-                displayHabitDBInfo();
+                insert();
+                displayDBInfo();
             }
         });
 
@@ -53,22 +53,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //display method
-        displayHabitDBInfo();
+        displayDBInfo();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        displayHabitDBInfo();
+        displayDBInfo();
+    }
+
+    //A readRow method that returns a Cursor object with the data from the db
+    private Cursor readRow() {
+
+        SQLiteDatabase db = habitDBHelper.getReadableDatabase();
+
+        String[] projection = {
+                HabitEntry._ID,
+                HabitEntry.COLUMN_HABIT_NAME,
+                HabitEntry.COLUMN_HABIT_ACTION
+        };
+
+        String selection = HabitEntry.COLUMN_HABIT_NAME + "== ?";
+
+        //"Reading the book" acts as a placeholder which selects the dummy data,
+        // although you can place any other value or remove it and selection variable to view all the db content
+        String[] selectionArgs = {"Reading the book"};
+
+        Cursor cursor = db.query(HabitEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        return cursor;
+
     }
 
     //To display the content of the db as a verification step
-    private void displayHabitDBInfo() {
+    private void displayDBInfo() {
 
-        //Create and/or open a database to read from it
-        SQLiteDatabase db = habitDBHelper.getReadableDatabase();
-
-        Cursor cursor = db.query(HabitEntry.TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = readRow();
 
         TextView displayDB = (TextView) findViewById(R.id.text_view);
 
@@ -100,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void insertDummyData() {
+    //Inserts a dummy data
+    private void insert() {
 
         //Declare an SQL db
         SQLiteDatabase sqLiteDatabase = habitDBHelper.getWritableDatabase();
@@ -115,10 +136,10 @@ public class MainActivity extends AppCompatActivity {
         long dummyRowId = sqLiteDatabase.insert(HabitEntry.TABLE_NAME, null, contentValues);
 
         if (dummyRowId == -1) {
-            Toast.makeText(this, "Error with saving the dummy habit!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error with saving the dummy habit!", Toast.LENGTH_SHORT).show();
 
         } else {
-            Toast.makeText(this, "Row ID: " + dummyRowId, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Row ID: " + dummyRowId, Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -67,10 +67,10 @@ public class EditorActivity extends AppCompatActivity {
         long rowID = sqLiteDatabase.insert(HabitContract.HabitEntry.TABLE_NAME, null, contentValues);
 
         if (rowID == -1) {
-            Toast.makeText(this, "Error with saving the habit!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error with saving the habit!", Toast.LENGTH_SHORT).show();
 
         } else {
-            Toast.makeText(this, "Row ID: " + rowID, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Row ID: " + rowID, Toast.LENGTH_SHORT).show();
         }
     }
 }
